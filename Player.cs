@@ -53,6 +53,7 @@ namespace AchtungDieKurve
         {
             if (IsAtive)
             {
+                #region Change of direction
                 if (keyState.GetPressedKeys().Contains(KeyLeft))
                 {
                     this.Direction += DirectionSpeed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -61,7 +62,9 @@ namespace AchtungDieKurve
                 {
 
                     this.Direction -= DirectionSpeed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                }
+                } 
+                #endregion
+
                 Vector2 newPosition = ActualPosition + new Vector2((float)Math.Sin(Direction) * Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds, (float)Math.Cos(Direction) * Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds);
                 float Distance = Vector2.Distance(newPosition, Positions[Positions.Count - 1]);
                 if (SpaceParts <= 0)
@@ -80,13 +83,17 @@ namespace AchtungDieKurve
                         Positions.Add(ActualPosition);
                     }
                 }
+
                 ActualPosition = newPosition;
+
+                #region Spaces
                 SpaceTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (SpaceTime <= 0)
                 {
                     SpaceParts = SpacePartsMax;
                     SpaceTime = 2000 + Nahoda.Next(0, 3000);
-                } 
+                }  
+                #endregion
             }
         }
         public void Draw(SpriteBatch spriteBatch)
